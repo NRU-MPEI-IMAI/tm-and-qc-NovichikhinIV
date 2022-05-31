@@ -1,0 +1,305 @@
+\documentclass[a4paper,12pt]{article}
+
+%%% Работа с русским языком
+\usepackage{cmap}					% поиск в PDF
+\usepackage{mathtext} 				% русские буквы в формулах
+\usepackage[T2A]{fontenc}			% кодировка
+\usepackage[utf8]{inputenc}			% кодировка исходного текста
+\usepackage[english,russian]{babel}	% локализация и переносы
+
+
+\usepackage[notransparent]{svg}     % svg
+% Использование симовла лямюда в рисунках svg 
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{03BB}{$\lambda$}
+
+%% Шрифты
+\usepackage{euscript} % Шрифт Евклид
+\usepackage{mathrsfs} % Красивый матшрифт
+
+
+
+\usepackage[margin=3cm]{geometry}
+\usepackage{paralist}
+\usepackage{amsthm, amsmath, amsfonts, amssymb}
+\usepackage{mathtools} % \mathclap
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{xcolor, colortbl}
+\usepackage{xifthen, xspace}
+\usepackage{caption, subcaption}
+\usepackage{lscape}
+\usepackage{braket}
+\usepackage{epigraph}
+\usepackage{listings}
+
+
+\usepackage{verbatim}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+}
+
+%%% Заголовок
+\author{Новичихин И.В.}
+\title{ДЗ №3: Машины Тьюринга и квантовые вычисления}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+
+
+
+
+
+\section{Машины Тьюринга}
+
+Работу требуется выполнять в системе \url{turingmachine.io}. \\\\
+Для сдачи заданий 1-2 требуется прикрепить файлы YAML с исходным кодом проекта. Каждый файлы должен иметь наименование задание\_пункт.yml, к примеру 1\_1.yml для первой задачи первого задания. \\\\
+
+
+% 1 задание МТ
+\subsection{Операции с числами}
+
+Реализуйте машины Тьюринга, которые позволяют выполнять следующие операции:
+
+% 1.1
+\subsubsection{Сложение двух унарных чисел (1 балл)}
+
+\textbf{Решение представлено в файле \href{https://github.com/NRU-MPEI-IMAI/tm-and-qc-NovichikhinIV/blob/main/yaml/1_1.yaml}{1\_1.yaml}.} \\
+
+Алгортим: заменяем "+" на 1, и удаляем последнюю единицу
+
+
+% 1.2
+\subsubsection{Умножение унарных чисел (1 балл)}
+
+\textbf{Решение представлено в файле \href{https://github.com/NRU-MPEI-IMAI/tm-and-qc-NovichikhinIV/blob/main/yaml/1_2.yaml}{1\_2.yaml}.} \\
+
+Алгоритм: пишем справа знак равно и переносим единицы по одной. Уже перенесенную единицу отмечаем симолом x, после того как всё перенесли стираем то что слева от равно и само равно \\\\
+
+
+
+
+
+
+% 2 задание МТ
+\subsection{Операции с языками и символами}
+
+Реализуйте машины Тьюринга, которые позволяют выполнять следующие операции:
+
+% 2.1
+\subsubsection{Принадлежность к языку $L = \{ 0^n1^n2^n \}, n \ge 0$ (0.5 балла)}
+
+\textbf{Решение представлено в файле \href{https://github.com/NRU-MPEI-IMAI/tm-and-qc-NovichikhinIV/blob/main/yaml/2_1.yaml}{2\_1.yaml}.} \\
+
+На вход поступает строка из 0, 1, 2. Далее по очереди заменяем 0, 1, 2 на x. Если в результате всё заменилось на x, то результат работы y (слово принадлежит языку L). Если нарушится порядок символов или их будет не одинаковое количество, то результат работы n (слово не принадлежит языку L)
+
+
+% 2.2
+\subsubsection{Проверка соблюдения правильности скобок в строке (минимум 3 вида скобок) (0.5 балла)}
+
+\textbf{Решение представлено в файле \href{https://github.com/NRU-MPEI-IMAI/tm-and-qc-NovichikhinIV/blob/main/yaml/2_2.yaml}{2\_2.yaml}.} \\
+
+На вход поступает строка их скобок (), [], \{\}, Будем идти по слову и искать первую закрывающую скобку. Как только она найдена, заменяем скобку на x и идем направо искать открывающую такого же вида (идем направо пока есть символ x), иначе слово не принадлежит языку. Если в итоге в строке остались только символы x, то стираем все символы записываем y, это будет результат программы (слово принадлежит языку). Если не принадлежит языку результат программы символ n
+
+% 2.3
+\subsubsection{Поиск минимального по длине слова в строке (слова состоят из символов 1 и 0 и разделены пробелом) (1 балл)}
+
+\textbf{Решение представлено в файле \href{https://github.com/NRU-MPEI-IMAI/tm-and-qc-NovichikhinIV/blob/main/yaml/2_3.yaml}{2\_3.yaml}.} \\
+
+На вход поступает строка из слов из 0 и 1, которые разделены пробелом. Обрабатываем по два слова: 0 заменяем на x, 1 заменяем на w, и затем сравниваем слова по длине. Если первое слово больше, то стираем его, а во втором слове обратно заменяем x на 0, w на 1. Если второе слово больше, то перемещаем первое слово на место второго и удаляем лишние символы.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Квантовые вычисления}
+
+Для выполнения заданий по квантовым вычислениям требуется QDK. Его можно скачать здесь: \url{https://docs.microsoft.com/en-us/azure/quantum/install-overview-qdk}. 
+\\\\
+Но можно использовать любой пакет, типа \url{https://qiskit.org/}. 
+\\\\
+В качестве решения задачи надо предоставить схему алгоритма для частного случая при фиксированном количестве кубитов и фиксированных состояниях. 
+
+
+
+
+
+
+\subsection{Генерация суперпозиций 1 (1 балл)}
+
+Дано $N$ кубитов ($1 \le N \le 8$) в нулевом состоянии $\Ket{0\dots0}$. Также дана некоторая последовательность битов, которое задаёт ненулевое базисное состояние размера $N$. Задача получить суперпозицию нулевого состояния и заданного.
+
+$$\Ket{S} = \frac{1}{\sqrt2}(\Ket{0\dots0} +\Ket{\psi})$$
+
+То есть требуется реализовать операцию, которая принимает на вход:
+
+\begin{enumerate}
+    \item Массив кубитов $q_s$
+    \item Массив битов $bits$ описывающих некоторое состояние $\Ket{\psi}$. Это массив имеет тот же самый размер, что и $qs$. Первый элемент этого массива равен $1$.
+\end{enumerate}
+
+Так как первые кубиты векторов различны, то применяем оператор Адамара к первому кубиту
+
+Далее если bits[i] равно 1, то запутываем i-ый кубит (оператор CNOT)
+
+
+\begin{lstlisting}
+namespace Solution {
+    open Microsoft.Quantum.Primitive;
+    open Microsoft.Quantum.Canon;
+    operation Solve (qs : Qubit[], bits : Bool[]) : ()
+    {
+        body
+        {
+            H(qs[0]);
+            for (i in 1..Length(qs) - 1)
+                if (bits[i]) 
+                    CNOT(qs[0], qs[i]);
+        }
+    }
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+\subsection{Различение состояний 1 (1 балл)}
+
+Дано $N$ кубитов ($1 \le N \le 8$), которые могут быть в одном из двух состояний:
+
+$$\Ket{GHZ} = \frac{1}{\sqrt2}(\Ket{0\dots0} +\Ket{1\dots1})$$
+$$\Ket{W} = \frac{1}{\sqrt N}(\Ket{10\dots00}+\Ket{01\dots00} + \dots +\Ket{00\dots01})$$
+
+Требуется выполнить необходимые преобразования, чтобы точно различить эти два состояния. Возвращать $0$, если первое состояние и 1, если второе. 
+
+\\\\
+\begin{lstlisting}
+namespace Solution {
+    open Microsoft.Quantum.Primitive;
+    open Microsoft.Quantum.Canon;
+    operation Solve (qs : Qubit[]) : Int
+    {
+        body
+        {
+            mutable countOnes = 0;
+            for (i in 0..Length(qs) - 1) {
+                if (M(qs[i]) == One) {
+                    set countOnes = countOnes + 1;
+                }
+            }
+            if (countOnes == Length(qs) or countOnes == 0)
+            {
+                return 0;
+            }
+            return 1;
+        }
+    }
+}
+
+
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Различение состояний 2 (2 балла)}
+
+Дано $2$ кубита, которые могут быть в одном из двух состояний:
+
+$$\Ket{S_0} = \frac{1}{2}(\Ket{00} + \Ket{01} + \Ket{10} + \Ket{11})$$
+$$\Ket{S_1} = \frac{1}{2}(\Ket{00} - \Ket{01} + \Ket{10} - \Ket{11})$$
+$$\Ket{S_2} = \frac{1}{2}(\Ket{00} + \Ket{01} - \Ket{10} - \Ket{11})$$
+$$\Ket{S_3} = \frac{1}{2}(\Ket{00} - \Ket{01} - \Ket{10} + \Ket{11})$$
+
+
+Требуется выполнить необходимые преобразования, чтобы точно различить эти четыре состояния. Возвращать требуется индекс состояния (от $0$ до $3$). 
+\\\\
+Заготовка для кода:
+\begin{lstlisting}
+namespace Solution {
+        open Microsoft.Quantum.Primitive;
+        open Microsoft.Quantum.Canon;
+        operation Solve (qs : Qubit[]) : Int
+        {
+            body
+            {
+
+                return 
+            }
+        }
+}
+\end{lstlisting}
+
+
+
+
+
+
+\subsection{Написание оракула 1 (2 балла)}
+
+Требуется реализовать квантовый оракул на $N$ кубитах ($1 \le N \le 8$), который реализует следующую функцию: $f(\pmb{x}) = (\pmb{b}\pmb{x}) \mod 2$, где  $\pmb{b} \in \{0,1\}^N$ вектор битов и  $\pmb{x}$ вектор кубитов. Выход функции записать в кубит $\pmb{y}$. Количество кубитов $N$ ($1 \le N \le 8$). 
+\\\\
+Заготовка для кода:
+\begin{lstlisting}
+namespace Solution {
+        open Microsoft.Quantum.Primitive;
+        open Microsoft.Quantum.Canon;
+        operation Solve (x : Qubit[], y : Qubit, b : Int[]) : ()
+        {
+            body
+            {
+
+            }
+        }
+}
+\end{lstlisting}
+
+\end{document}
